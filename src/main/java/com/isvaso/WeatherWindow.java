@@ -7,6 +7,10 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * The WeatherWindow class is responsible for launching the Weather
+ * Application window.
+ */
 public class WeatherWindow extends Application {
 
     private static final Logger logger = LogManager.getLogger(WeatherWindow.class);
@@ -15,6 +19,12 @@ public class WeatherWindow extends Application {
     private final int WINDOW_WIDTH = 300;
     private final int WINDOW_HEIGHT = 450;
 
+
+    /**
+     * Starts the Weather Application window.
+     * @param stage The main stage of the application.
+     * @throws Exception If an error occurs during loading the FXML file.
+     */
     @Override
     public void start(Stage stage) throws Exception {
         logger.info("Weather window starts");

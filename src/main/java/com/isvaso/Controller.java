@@ -15,40 +15,84 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
+/**
+ * This class is a controller for the weather application GUI. It handles user
+ * input and updates the GUI with weather information obtained from an external
+ * weather API.
+ */
 public class Controller {
 
+    /**
+     * The ResourceBundle containing localizable text for the GUI.
+     */
     @FXML
     private ResourceBundle resources;
 
+    /**
+     * The location of the FXML file for the GUI.
+     */
     @FXML
     private URL location;
 
+    /**
+     * The text field where the user enters the name of a city
+     * to get weather information for.
+     */
     @FXML
     private TextField city;
 
+    /**
+     * The button the user clicks to get weather information for the entered city.
+     */
     @FXML
     private Button getData;
 
+    /**
+     * The text element in the GUI displaying the pressure value.
+     */
     @FXML
     private Text pressure;
 
+    /**
+     * The text element in the GUI displaying the temperature "feels like" value.
+     */
     @FXML
     private Text temp_feels;
 
+    /**
+     * The text element in the GUI displaying the current temperature value.
+     */
     @FXML
     private Text temp_info;
 
+    /**
+     * The text element in the GUI displaying the maximum temperature value.
+     */
     @FXML
     private Text temp_max;
 
+    /**
+     * The text element in the GUI displaying the minimum temperature value.
+     */
     @FXML
     private Text temp_min;
 
+    /**
+     * The API key to use for accessing the external weather API.
+     */
     private static final String API_KEY = "46f312369fd5bb665d26534997bd7b2d";
+
+    /**
+     * The base URL of the external weather API.
+     */
     private static final String API_BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
 
     private static final Logger logger = LogManager.getLogger(Controller.class);
 
+    /**
+     * Initializes the controller class. This method is automatically called
+     * after the FXML file has been loaded.
+     */
     @FXML
     void initialize() {
         logger.info("Start initialize()");
@@ -64,6 +108,13 @@ public class Controller {
         });
     }
 
+    /**
+     * Returns the metric sign for a specified parameter,
+     * e.g. "°C" for "temperature".
+     *
+     * @param parameter the name of the parameter to get the metric sign for.
+     * @return the metric sign for the specified parameter.
+     */
     private String getMetricSign(String parameter) {
 
         return switch (parameter) {
@@ -73,6 +124,14 @@ public class Controller {
         };
     }
 
+    /**
+     * Sends a GET request to the specified URL and returns the response.
+     *
+     * @param urlAddress the URL to send the GET request to
+     * @return the response received from the server
+     * @throws IOException if an error occurs while sending the
+     * GET request or reading the response
+     */
     private String getUrlContent(String urlAddress) throws IOException {
         logger.debug("Sending GET request to: " + urlAddress);
         URL url = new URL(urlAddress);
@@ -101,6 +160,10 @@ public class Controller {
         }
     }
 
+    /**
+     * Handles the action of getting the weather data
+     * for the user's specified city.
+     */
     private void getDataAction() {
         String getUserCity = city.getText().trim();
         logger.info("User input city: " + getUserCity);
@@ -119,6 +182,15 @@ public class Controller {
         }
     }
 
+    /**
+     * Retrieves weather data from the specified URL and returns
+     * it as a JSONObject.
+     *
+     * @param urlAddress the URL to retrieve weather data from
+     * @return the weather data as a JSONObject
+     * @throws IOException if an error occurs while sending the
+     * GET request or reading the response
+     */
     private JSONObject getWeatherData(String urlAddress) throws IOException {
         String output = getUrlContent(urlAddress);
 
@@ -131,6 +203,11 @@ public class Controller {
         return null;
     }
 
+    /**
+     * Gets data from a JSON Object and passes it to the application's GUI
+     *
+     * @param weatherData JSON Object with the weather data
+     */
     private void updateUI(JSONObject weatherData) {
         if (weatherData != null) {
             double temperature = weatherData
