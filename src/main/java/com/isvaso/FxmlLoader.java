@@ -22,10 +22,19 @@ public class FxmlLoader {
      * @return the root node of the loaded FXML file
      * @throws IOException if an I/O error occurs while loading the FXML file
      */
-    public Parent load(String location) throws IOException {
+    public Parent load(String location) {
         logger.debug("Loading FXML from {}", location);
+        Parent parent = null;
 
-        return FXMLLoader.load(Objects.requireNonNull(getClass()
-                .getResource(location)));
+        try {
+            parent = FXMLLoader.load(Objects.requireNonNull(getClass()
+                    .getResource(location)));
+            logger.debug("FXML from {} was loaded", location);
+        } catch (Exception e) {
+            logger.error("FXML from {} wasn't loaded", location);
+            logger.error(e);
+            System.exit(0);
+        }
+        return parent;
     }
 }

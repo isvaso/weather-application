@@ -14,19 +14,19 @@ import org.apache.logging.log4j.Logger;
 public class WeatherWindow extends Application {
 
     private static final Logger logger = LogManager.getLogger(WeatherWindow.class);
-    private final String FXML_LOCATION = "../../sample.fxml";
+    private final String FXML_LOCATION = "/sample.fxml";
     private final String WINDOW_NAME = "Weather Application";
     private final int WINDOW_WIDTH = 300;
     private final int WINDOW_HEIGHT = 450;
 
-
     /**
      * Starts the Weather Application window.
+     *
      * @param stage The main stage of the application.
      * @throws Exception If an error occurs during loading the FXML file.
      */
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         logger.info("Weather window starts");
         Parent root = new FxmlLoader().load(FXML_LOCATION);
         stage.setTitle(WINDOW_NAME);
